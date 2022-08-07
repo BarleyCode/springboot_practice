@@ -35,6 +35,15 @@ repositories {
 - https://github.com/jojoldu/freelec-springboot2-webservice/issues/78
 - dependencies, configurations을 위와 같이 수정
 
+spring-boot-starter-data-jpa
+- Springboot용 Spring Data JPA 추상화 라이브러리
+- 스프링 부트 버전에 맞추어 자동으로 JPA관련 라이브러리들의 버전을 관리
+
+h2
+- 인메모리 관계형 DB
+- 별도 설치가 필요 없어 프로젝트 의존성만으로 관리 가능
+- 메모리에서 실행 : 앱을 재시작할 때마다 초기화. 그래서 테스트 용도로 많이 사용
+
 */
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
@@ -43,6 +52,8 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.projectlombok:lombok'
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('com.h2database:h2')
 }
 configurations {
     compileOnly {
