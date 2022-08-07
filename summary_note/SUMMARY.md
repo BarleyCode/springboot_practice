@@ -19,7 +19,7 @@
     - Entity 클래스는 테이블과 직접 연결되어 있다. 그래서 여러 클래스에 영향을 끼칠 수 있음.
     - Request, Response용 Dto는 View를 위한 클래스라 자주 변경 필요. 
     - Application 클래스의 main 메소드 실행 테스트
-        - http://localhost:8080/h2-console로 ㅈ버속
+        - http://localhost:8080/h2-console로 접속
         - JDBC URL 주소는 `jdbc:h2:mem:testdb`로 설정, 입력 후 'Connect' 버튼 클릭
         - POSTS 테이블이 보이면 성공
         - 간단하게 데이터 삽입
