@@ -1,4 +1,5 @@
 package com.barley.book.springboot.domain.posts;
+import com.barley.book.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,11 +31,12 @@ annotation 꿀팁
 @Getter // Lombok annotation
 @NoArgsConstructor // Lombok annotation
 @Entity // JPA annotation
-public class Posts {
+public class Posts extends BaseTimeEntity {
     /*
     Posts 클래스(= Entity 클래스)
     - 실제 DB의 테이블과 매칭될 클래스
     - JPA 사용 시 DB 데이터에 작업할 경우 실제 쿼리를 전송하기보다는 이 Entity 클래스의 수정을 통해 작업
+    - BaseTimeEntity 상속 : 등록일/수정일 자동 입력됨
 
     참고
     - Entity의 PK는 Long 타입의 Auto_increment 추천(MySQL 기준 bigint)

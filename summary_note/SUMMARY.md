@@ -27,4 +27,20 @@
           insert into posts (author, content, title) values ('author', 'content', 'title');
           ```
         - 확인 : http://localhost:8080/api/v1/posts/1
-      
+
+### 3.5 JPA Auditing으로 생성시간/수정시간 자동화하기
+- 매번 DB에 삽입(insert), 갱신(update) 전 날짜를 등록/수정하는 코드가 생기는 문제 해결
+
+## Ch.4 머스테치(Mustache)로 화면 구성하기
+- 공부하기
+    - 서버 템플릿 엔진 vs 클라이언트 템플릿 엔진 차이
+    - JSP가 아닌 머스테치를 선택한 이유?
+    - 기본적인 CRUD 화면 개발 방법
+
+### 4.1 서버 템플릿 엔진과 머스테치 소개
+- 템플릿 엔진 : 지정된 템플릿 양식 + 데이터 = HTML 문서 출력
+- 예 : JSP, Freemarker, React, Vue 등
+- 템플릿 엔진 단점
+    - JSP, Velocity : 스프링 부트에서는 권장하지 않음
+    - Freemarker : 과도한 기능 지원. 높은 자유도로 인해 숙련도가 낮을수록 Freemarker 안에 비즈니스 로직이 추가될 수 있음.
+    - 
