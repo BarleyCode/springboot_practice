@@ -1,5 +1,7 @@
 package com.barley.book.springboot.domain.posts;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import java.util.List;
 
 /*
 Interface 생성하기
@@ -14,4 +16,13 @@ JpaRepository
 */
 
 public interface PostsRepository extends JpaRepository<Posts, Long> {
+    /*
+    @Query
+    - SpringDataJpa에서 제공하지 않는 메소드는 쿼리로 작성 가능
+    - 아래의 코드는 SpringDataJpa에서 제공하는 기본 메소드만으로 해결 가능하나,
+      @Query가 가독성이 훨씬 좋다.
+
+    */
+    @Query("SELECT p FROM Posts p ORDER BY p.id DESC")
+    List<Posts> findAllDesc();
 }

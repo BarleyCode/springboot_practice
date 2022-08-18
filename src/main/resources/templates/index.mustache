@@ -16,6 +16,39 @@ Mustache 파일 위치 : (기본) src/main/resources/templates
                 <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
             </div>
         </div>
+        <br>
+            <!-- 목록 출력 영역 -->
+        <table class="table table-horizontal table-bordered">
+            <thead class="thead-strong">
+            <tr>
+                <th>게시글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>최종수정일</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            <!--
+            #posts
+            - posts라는 List를 순회
+            - Java의 for문과 유사하다.
+
+            중괄호 2개 변수 (id, title, author, modifiedDate)
+            - Lists에서 뽑아낸 객체의 필드를 사용
+
+
+            -->
+            {{#posts}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{title}}</td>
+                    <td>{{author}}</td>
+                    <td>{{modifiedDate}}</td>
+                </tr>
+            {{/posts}}
+            </tbody>
+        </table>
+        </br>
     </div>
 
 {{>layout/footer}}

@@ -1,12 +1,15 @@
 package com.barley.book.springboot.service.posts;
 import com.barley.book.springboot.domain.posts.Posts;
 import com.barley.book.springboot.domain.posts.PostsRepository;
+import com.barley.book.springboot.web.dto.PostsListResponseDto;
 import com.barley.book.springboot.web.dto.PostsResponseDto;
 import com.barley.book.springboot.web.dto.PostsSaveRequestDto;
 import com.barley.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -44,4 +47,19 @@ public class PostsService {
         );
         return new PostsResponseDto(entity);
     }
+
+    /*
+    findAllDesc()
+    - readOnly = true 옵션 : 트랜잭션 범위는 유지하되, 조회 기능만 남긴다 → 조회 속도 개선
+      추천 : 등록, 수정, 삭제 기능이 없는 서비스 메소드
+    - .map(PostsListResponseDto::new) = .map(posts -> new PostsListResposeDto(posts))
+
+    */
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
 }
