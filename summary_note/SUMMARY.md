@@ -167,4 +167,5 @@
     - 테스트 사용자
         - 테스트 중이라면 여기에 사용자(구글 이메일)를 등록해야만 로그인이 가능하다.
         - https://soda-dev.tistory.com/m/60
-- 
+- application-oauth.properties 작성이 끝났으면 .gitignore에 등록하기
+    - .gitignore도 반드시 올라가야 한다! 안 그러면 파일 무시가 안 되고 그대로 올라간다.
