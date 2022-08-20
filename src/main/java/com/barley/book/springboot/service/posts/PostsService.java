@@ -62,4 +62,20 @@ public class PostsService {
                 .collect(Collectors.toList());
     }
 
+    /*
+    delete(Long id)
+    - 삭제 API
+
+    possRepository.delete(posts)
+    - JpaRepository에서 이미 delete 메소드 지원 → 이를 활용
+    - 엔티티를 파라미터로 삭제 가능, deleteById 메소드 이용 시 id로 삭제 가능
+    - 존재하는 Posts인지 확인을 위해 엔티티 조회 후 그대로 삭제
+    */
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        postsRepository.delete(posts);
+    }
+
 }

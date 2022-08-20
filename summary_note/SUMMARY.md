@@ -2,6 +2,12 @@
 - 참고 : https://github.com/jojoldu/freelec-springboot2-webservice/
 - 코드 수정 후 확인 시 반드시 서버 재시작(IntelliJ에서 Rerun 클릭)
 
+## Ch.2 스프링 부트에서 테스트 코드를 작성하자
+### Ch.2 마무리
+- TDD와 단위 테스트란?
+- 스프링 부트 환경에서 테스트 코드를 작성하는 방법
+- 자바의 필수 유틸 롬복(lombok)의 사용법
+
 ## Ch.3 스프링 부트에서 JPA로 데이터베이스 다뤄보자
 ### 3.4 등록/수정/조회 API 만들기
 - API를 만들기 위해 총 3가지 클래스 필요
@@ -32,6 +38,12 @@
 
 ### 3.5 JPA Auditing으로 생성시간/수정시간 자동화하기
 - 매번 DB에 삽입(insert), 갱신(update) 전 날짜를 등록/수정하는 코드가 생기는 문제 해결
+
+### Ch.3 마무리
+- JPA / Hibernate / Spring Data Jpa의 관계
+- Spring Data Jpa를 이용해 관계형 DB를 객체지향적으로 관리하는 법
+- JPA의 더티 체킹을 이용하면 Update 쿼리 없이 테이블 수정 가능
+- JPA Auditing을 이용해 등록/수정 시간 자동화
 
 ## Ch.4 머스테치(Mustache)로 화면 구성하기
 - 공부하기
@@ -75,3 +87,84 @@
     - 국내의 많은 회사에서 사용
         - 쿠팡, 배달의민족 등
     - 레퍼런스가 많다
+
+### 4.5 게시글 수정, 삭제 화면 만들기
+- REST에서 CRUD는 아래와 같이 HTTP Method에 매핑됨
+    ```
+    생성(Create) - POST
+    읽기(Read) - GET
+    수정(Update) - PUT
+    삭제(Delete) - DELETE
+    ```
+- 이쯤에서 기능 만드는 절차 정리
+    - mustache 작성 or 수정 (예: posts-update.mustache)
+    - 이벤트를 진행할 JS 코드 추가/수정 (예: index.js)
+    - 서비스 메소드 생성/수정 (예: PostsService 자바 클래스 내 delete 메소드 등)
+    - API 컨트롤러 생성/수정 (예: PostsService 클래스에 만들었으면 PostsApiController에 추가)
+
+### Ch.4 마무리
+- 서버 템플릿 엔진과 클라이언트 템플릿 엔진의 차이
+- 머스테치의 기본 사용 방법
+- 스프링 부트에서의 화면 처리 방식
+- js/css의 선언 위치를 다르게 하여 웹 사이트의 로딩 속도를 향상하는 방법
+- js 객체를 이용해 브라우저의 전역 변수 충돌 문제 회피
+  
+## Ch.5 스프링 시큐리티와 OAuth 2.0으로 로그인 기능 구현하기
+- 스프링 시큐리티 : 막강한 인증(Authentication), 인가(Authorization) 기능을 가진 프레임워크
+    - 인터셉터, 필터 기반 보안 구현보다 훨씬 낫다
+- MVC, Data, Batch 등 다양한 요구사항을 손쉽게 추가/변경 가능
+
+### 5.1 스프링 시큐리티와 스프링 시큐리티 OAuth2 클라이언트
+- 소셜 로그인 기능
+    - 로그인 기능을 직접 구현할 경우 배보다 배꼽이 더 커진다
+    - 직접 구현하려면 필요한 것
+        - 로그인 시 보안
+        - 회원가입 시 이메일/전화번호 인증
+        - 비밀번호 찾기
+        - 비밀번호 변경
+        - 회원정보 변경
+    - OAuth 로그인 구현 시 위의 항목들은 모두 구글, 네이버, 카카오, 페이스북 등에 맡기면 된다.
+- 스프링부트 1.5 vs 2.0
+    - spring-security-oauth2-autoconfigure 라이브러리 덕분에 설정 방법은 비슷
+    - 하지만 이 책에서는 Spring Security OAuth2 Client 라이브러리로 진행. 이유는...
+        - 신규 기능은 새 OAuth2에서만 지원
+        - 스프링 부트용 라이브러리(starter) 출시
+        - 신규 라이브러리의 경우 확장 포인트를 고려해 설계. 기존 방식은 확장 포인트가 적절하게 오픈되어 있지 않아 직접 상속하거나 오버라이딩해야 한다.
+- 이 책 이외에 2.0 방식의 자료를 찾고 싶다면 아래를 확인하기
+    - spring-security-oauth2-autoconfigure 라이브러리를 사용했는지?
+    - application.properties 혹은 application.yml 정보가 아래와 같이 차이가 있는지?
+        - Spring Boot 1.5
+            - URL을 모두 명시해야 한다.
+            ```yml
+            google :
+                client :
+                    clientId: 인증정보
+                    clientSecret: 인증정보
+                    accessTokenUri: https://accounts.google.com/o/oauth2/token
+                    userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+                    clientAuthenticationScheme: form
+                    scope: email, profile
+                resource :
+                    userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo
+            ```
+        - Spring Boot 2.0
+            - client 인증 정보만 입력하면 된다.
+            ```yml
+            spring:
+                security:
+                    oauth2:
+                        client:
+                            clientId: 인증정보
+                            clientSecret: 인증정보
+            ```
+
+### 5.2 구글 서비스 등록
+- __주의__ OAuth 동의 화면을 먼저 만들어야 OAuth 클라이언트 ID를 생성할 수 있다.
+- OAuth 동의 화면 : User Type은 외부만 선택 가능할 수도 있음
+    - 범위
+        - 기본값(범위 추가 안 했을 때) : email, profile, openid
+        - 최신 등록 화면에서는 위 3개가 선택지에 안 보일 수도 있음
+    - 테스트 사용자
+        - 테스트 중이라면 여기에 사용자(구글 이메일)를 등록해야만 로그인이 가능하다.
+        - https://soda-dev.tistory.com/m/60
+- 

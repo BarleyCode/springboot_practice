@@ -41,7 +41,11 @@ Mustache 파일 위치 : (기본) src/main/resources/templates
             {{#posts}}
                 <tr>
                     <td>{{id}}</td>
-                    <td>{{title}}</td>
+                    <!--
+                    title에 anchor tag 추가
+                    타이틀 클릭 시 해당 게시글의 수정 화면으로 이동
+                    -->
+                    <td><a href="/posts/update/{{id}}">{{title}}</a></td>
                     <td>{{author}}</td>
                     <td>{{modifiedDate}}</td>
                 </tr>
