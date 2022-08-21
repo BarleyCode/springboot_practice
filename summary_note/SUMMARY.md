@@ -167,5 +167,11 @@
     - 테스트 사용자
         - 테스트 중이라면 여기에 사용자(구글 이메일)를 등록해야만 로그인이 가능하다.
         - https://soda-dev.tistory.com/m/60
-- application-oauth.properties 작성이 끝났으면 .gitignore에 등록하기
+- application-oauth.properties
+    - spring.security.oauth2.client.registration.google.scope=profile,mail
+        - 많은 예제에서는 이 scope를 별도로 등록하지 않는다. 기본값이 openid, profile, email이기 때문
+        - 강제로 profile, email을 등록한 이유 : openid라는 scope가 있으면 openid provider로 인식하기 때문.
+        - 이렇게 되면 OpenId Provider인 서비스(구글)와 그렇지 않은 서비스(네이버/카카오 등)로 나눠서 각각 OAuth2Service를 만들어야 한다.
+        - 하나의 OAuth2Service로 사용하기 위해 일부러 openid scope를 빼고 등록
+    - 작성이 끝났으면 .gitignore에 등록하기
     - .gitignore도 반드시 올라가야 한다! 안 그러면 파일 무시가 안 되고 그대로 올라간다.
